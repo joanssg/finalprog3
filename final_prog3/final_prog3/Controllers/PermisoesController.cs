@@ -6,122 +6,73 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.WebPages;
 using final_prog3.Models;
 
 namespace final_prog3.Controllers
 {
-    public class PermisoesController : Controller
+    public class NominaController : Controller
     {
+
         private final_prog3Entities db = new final_prog3Entities();
 
-        // GET: Permisoes
-        public ActionResult Index()
+        public ActionResult Index(string Busqueda, string valor)
         {
-            return View(db.Permisos.ToList());
+
+
+            if (Busqueda == "IdEmpleado")
+            {
+                int d = 0;
+                if (!valor.IsEmpty())
+                {
+                    d = int.Parse(valor);
+                }
+
+                return View(db.Permisos.Where(m => m.IdEmpleado == d).ToList());
+            }
+            else
+            {
+
+                return View(db.Permisos.ToList());
+            }
         }
 
-        // GET: Permisoes/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Permiso permiso = db.Permisos.Find(id);
-            if (permiso == null)
-            {
-                return HttpNotFound();
-            }
-            return View(permiso);
-        }
-
-        // GET: Permisoes/Create
-        public ActionResult Create()
+        // GET: Permisos/Details/5
+        public ActionResult Details(int id)
         {
             return View();
         }
 
-        // POST: Permisoes/Create
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
-        // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
+        // GET: Permisos/Create
+        public ActionResult Create()
+        {
+            ViewBag.PersonList = new SelectList(db.Empleados.Where(m => m.estatus == "Activo"), "Id", "Nombre");
+            return View();
+        }
+
+        // POST: Permisos/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,IdEmpleado,Desde,Hasta,Comentarios")] Permiso permiso)
+        public ActionResult Create(Permiso permiso)
         {
-            if (ModelState.IsValid)
+            try
             {
+                int CodigoEmpleado = Convert.ToInt32(Request.Form["IdEmpleado"]);
+                var EmpleadoSalida = db.Empleados.Where(m => m.Id == CodigoEmpleado && m.estatus == "Activo").First();
+                int IdSalida = EmpleadoSalida.Id;
+                permiso.IdEmpleado = IdSalida;
                 db.Permisos.Add(permiso);
                 db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
-
-            return View(permiso);
-        }
-
-        // GET: Permisoes/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
+            catch
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Permiso permiso = db.Permisos.Find(id);
-            if (permiso == null)
-            {
-                return HttpNotFound();
-            }
-            return View(permiso);
-        }
 
-        // POST: Permisoes/Edit/5
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
-        // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,IdEmpleado,Desde,Hasta,Comentarios")] Permiso permiso)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(permiso).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
             }
-            return View(permiso);
-        }
-
-        // GET: Permisoes/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Permiso permiso = db.Permisos.Find(id);
-            if (permiso == null)
-            {
-                return HttpNotFound();
-            }
-            return View(permiso);
-        }
-
-        // POST: Permisoes/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Permiso permiso = db.Permisos.Find(id);
-            db.Permisos.Remove(permiso);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
+            ViewBag.NoResultados = "No hay ningún empleado con este código";
+            return View();
         }
     }
 }
+

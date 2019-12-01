@@ -10,17 +10,18 @@ using final_prog3.Models;
 
 namespace final_prog3.Controllers
 {
-    public class EmpleadoesController : Controller
+    public class EmpleadosController : Controller
     {
         private final_prog3Entities db = new final_prog3Entities();
 
-        // GET: Empleadoes
+        // GET: Empleados
         public ActionResult Index()
         {
-            return View(db.Empleados.ToList());
+            var empleados = db.Empleados.Include(e => e.Cargo1);
+            return View(empleados.ToList());
         }
 
-        // GET: Empleadoes/Details/5
+        // GET: Empleados/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -35,19 +36,21 @@ namespace final_prog3.Controllers
             return View(empleado);
         }
 
-        // GET: Empleadoes/Create
+        // GET: Empleados/Create
         public ActionResult Create()
         {
+            ViewBag.Cargo = new SelectList(db.Cargos, "Id", "Codigo");
             return View();
         }
 
-        // POST: Empleadoes/Create
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
-        // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Empleados/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Codigo,Nombre,Apellido,Telefono,genero,Departamento,Cargo,FechaIngreso,Salario,estatus")] Empleado empleado)
         {
+
             if (ModelState.IsValid)
             {
                 db.Empleados.Add(empleado);
@@ -55,10 +58,11 @@ namespace final_prog3.Controllers
                 return RedirectToAction("Index");
             }
 
+            ViewBag.Cargo = new SelectList(db.Cargos, "Id", "Codigo", empleado.Cargo);
             return View(empleado);
         }
 
-        // GET: Empleadoes/Edit/5
+        // GET: Empleados/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -70,12 +74,13 @@ namespace final_prog3.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.Cargo = new SelectList(db.Cargos, "Id", "Codigo", empleado.Cargo);
             return View(empleado);
         }
 
-        // POST: Empleadoes/Edit/5
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
-        // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Empleados/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Codigo,Nombre,Apellido,Telefono,genero,Departamento,Cargo,FechaIngreso,Salario,estatus")] Empleado empleado)
@@ -86,10 +91,11 @@ namespace final_prog3.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.Cargo = new SelectList(db.Cargos, "Id", "Codigo", empleado.Cargo);
             return View(empleado);
         }
 
-        // GET: Empleadoes/Delete/5
+        // GET: Empleados/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -104,7 +110,7 @@ namespace final_prog3.Controllers
             return View(empleado);
         }
 
-        // POST: Empleadoes/Delete/5
+        // POST: Empleados/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

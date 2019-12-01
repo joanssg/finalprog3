@@ -9,18 +9,19 @@ using System.Web.Mvc;
 using final_prog3.Models;
 
 namespace final_prog3.Controllers
-{
-    public class DepartamentoesController : Controller
-    {
+{ 
+    public class DepartamentosController : Controller
+        {
         private final_prog3Entities db = new final_prog3Entities();
 
-        // GET: Departamentoes
+        // GET: Departamentos
         public ActionResult Index()
         {
-            return View(db.Departamentos.ToList());
+            var departamentos = db.Departamentos.Include(d => d.Empleado);
+            return View(departamentos.ToList());
         }
 
-        // GET: Departamentoes/Details/5
+        // GET: Departamentos/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -35,30 +36,51 @@ namespace final_prog3.Controllers
             return View(departamento);
         }
 
-        // GET: Departamentoes/Create
+        // GET: Departamentos/Create
         public ActionResult Create()
         {
+            ViewBag.Encargado = new SelectList(db.Empleados, "Id", "Codigo");
+
             return View();
+
         }
 
-        // POST: Departamentoes/Create
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
-        // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Departamentos/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,Codigo,Nombre,Encargado")] Departamento departamento)
+        public ActionResult Create([Bind(Include = "id,Codigo,Nombre")] Departamento departamento)
         {
+
             if (ModelState.IsValid)
             {
-                db.Departamentos.Add(departamento);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+                try
+                {
 
+                    string CodigoEncargado = Request.Form["Encargado"];
+                    var EncargadoDep = db.Empleados.Where(m => m.Codigo == CodigoEncargado).First();
+                    int IdEncargado = EncargadoDep.Id;
+                    departamento.Encargado = IdEncargado;
+                    db.Departamentos.Add(departamento);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+
+                catch
+                {
+
+                }
+
+
+            }
+            ViewBag.NoResultados = "No hay ningún empleado con este código";
+            ViewBag.Encargado = new SelectList(db.Empleados, "Id", "Codigo", departamento.Encargado);
             return View(departamento);
+
         }
 
-        // GET: Departamentoes/Edit/5
+        // GET: Departamentos/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -70,26 +92,41 @@ namespace final_prog3.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.Encargado = new SelectList(db.Empleados, "Id", "Codigo", departamento.Encargado);
             return View(departamento);
         }
 
-        // POST: Departamentoes/Edit/5
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
-        // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Departamentos/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,Codigo,Nombre,Encargado")] Departamento departamento)
+        public ActionResult Edit([Bind(Include = "id,Codigo,Nombre")] Departamento departamento)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(departamento).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    string CodigoEncargado = Request.Form["Encargado"];
+                    var EncargadoDep = db.Empleados.Where(m => m.Codigo == CodigoEncargado).First();
+                    int IdEncargado = EncargadoDep.Id;
+                    departamento.Encargado = IdEncargado;
+                    db.Entry(departamento).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch
+                {
+
+                }
+
             }
+            ViewBag.NoResultados = "No hay ningún empleado con este código";
+            ViewBag.Encargado = new SelectList(db.Empleados, "Id", "Codigo", departamento.Encargado);
             return View(departamento);
         }
 
-        // GET: Departamentoes/Delete/5
+        // GET: Departamentos/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -104,7 +141,7 @@ namespace final_prog3.Controllers
             return View(departamento);
         }
 
-        // POST: Departamentoes/Delete/5
+        // POST: Departamentos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -124,4 +161,4 @@ namespace final_prog3.Controllers
             base.Dispose(disposing);
         }
     }
-}
+    }

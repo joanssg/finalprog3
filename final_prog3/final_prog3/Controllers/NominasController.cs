@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.WebPages;
 using final_prog3.Models;
 
 namespace final_prog3.Controllers
@@ -14,114 +15,120 @@ namespace final_prog3.Controllers
     {
         private final_prog3Entities db = new final_prog3Entities();
 
-        // GET: Nominas
-        public ActionResult Index()
+        // GET: Nomina
+        public ActionResult Index(string Busqueda, string valor)
         {
-            return View(db.Nominas.ToList());
+            int d = 0;
+
+
+            if (Busqueda == "Mes")
+            {
+
+                switch (valor)
+                {
+                    case "Enero":
+
+                        valor = "1";
+                        d = int.Parse(valor);
+                        break;
+                    case "Febrero":
+                        valor = "2";
+                        d = int.Parse(valor);
+                        break;
+                    case "Marzo":
+                        valor = "3";
+                        d = int.Parse(valor);
+                        break;
+                    case "Abril":
+                        valor = "4";
+                        d = int.Parse(valor);
+                        break;
+                    case "Mayo":
+                        valor = "5";
+                        d = int.Parse(valor);
+                        break;
+                    case "Junio":
+                        valor = "6";
+                        d = int.Parse(valor);
+                        break;
+                    case "Julio":
+                        valor = "7";
+                        d = int.Parse(valor);
+                        break;
+                    case "Agosto":
+                        valor = "8";
+                        d = int.Parse(valor);
+                        break;
+                    case "Septiembre":
+                        valor = "9";
+                        d = int.Parse(valor);
+                        break;
+                    case "Octubre":
+                        valor = "10";
+                        d = int.Parse(valor);
+                        break;
+                    case "Noviembre":
+                        valor = "11";
+                        d = int.Parse(valor);
+                        break;
+                    case "Diciembre":
+                        valor = "12";
+                        d = int.Parse(valor);
+                        break;
+                    default:
+                        valor = "0";
+                        break;
+                }
+
+                return View(db.Nominas.Where(x => x.Mes == d).ToList());
+            }
+            else
+            {
+                try
+                {
+                    if (!valor.IsEmpty())
+                    {
+                        d = int.Parse(valor);
+                    }
+                    else
+                    {
+                        valor = "0";
+                    }
+                }
+                catch
+                {
+
+                }
+
+
+                if (valor == "0") return View(db.Nominas.ToList());
+
+                else return View(db.Nominas.Where(x => x.Año == d).ToList());
+            }
         }
 
-        // GET: Nominas/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult VistaNomina()
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Nomina nomina = db.Nominas.Find(id);
-            if (nomina == null)
-            {
-                return HttpNotFound();
-            }
-            return View(nomina);
-        }
 
-        // GET: Nominas/Create
-        public ActionResult Create()
-        {
+            ViewBag.TotalSalario = db.Empleados.Where(m => m.estatus == "Activo").Sum(m => m.Salario);
             return View();
         }
 
-        // POST: Nominas/Create
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
-        // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST NOMINA
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,Año,Mes,MontoTotal")] Nomina nomina)
+        public ActionResult VistaNomina(Nomina nominas)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Nominas.Add(nomina);
+                db.Nominas.Add(nominas);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-            return View(nomina);
-        }
-
-        // GET: Nominas/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
+            catch
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Nomina nomina = db.Nominas.Find(id);
-            if (nomina == null)
-            {
-                return HttpNotFound();
-            }
-            return View(nomina);
-        }
 
-        // POST: Nominas/Edit/5
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
-        // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,Año,Mes,MontoTotal")] Nomina nomina)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(nomina).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
             }
-            return View(nomina);
-        }
-
-        // GET: Nominas/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Nomina nomina = db.Nominas.Find(id);
-            if (nomina == null)
-            {
-                return HttpNotFound();
-            }
-            return View(nomina);
-        }
-
-        // POST: Nominas/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Nomina nomina = db.Nominas.Find(id);
-            db.Nominas.Remove(nomina);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
+            return View();
         }
     }
 }

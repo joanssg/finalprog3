@@ -11,10 +11,21 @@ namespace final_prog3.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Empleado
     {
+        public Empleado()
+        {
+            this.Departamentos = new HashSet<Departamento>();
+            this.Licencias = new HashSet<Licencia>();
+            this.Permisos = new HashSet<Permiso>();
+            this.SalidaEmpleados = new HashSet<SalidaEmpleado>();
+            this.Vacaciones = new HashSet<Vacacione>();
+        }
+
         public int Id { get; set; }
+        [Required]
         public string Codigo { get; set; }
         public string Nombre { get; set; }
         public string Apellido { get; set; }
@@ -25,5 +36,13 @@ namespace final_prog3.Models
         public System.DateTime FechaIngreso { get; set; }
         public decimal Salario { get; set; }
         public string estatus { get; set; }
+
+        public virtual Cargo Cargo1 { get; set; }
+
+        public virtual ICollection<Departamento> Departamentos { get; set; }
+        public virtual ICollection<Licencia> Licencias { get; set; }
+        public virtual ICollection<Permiso> Permisos { get; set; }
+        public virtual ICollection<SalidaEmpleado> SalidaEmpleados { get; set; }
+        public virtual ICollection<Vacacione> Vacaciones { get; set; }
     }
 }

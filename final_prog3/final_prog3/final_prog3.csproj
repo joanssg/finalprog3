@@ -250,30 +250,14 @@
     <Content Include="Views\Empleadoes\Edit.cshtml" />
     <Content Include="Views\Empleadoes\Index.cshtml" />
     <Content Include="Views\Licencias\Create.cshtml" />
-    <Content Include="Views\Licencias\Delete.cshtml" />
-    <Content Include="Views\Licencias\Details.cshtml" />
-    <Content Include="Views\Licencias\Edit.cshtml" />
     <Content Include="Views\Licencias\Index.cshtml" />
-    <Content Include="Views\Nominas\Create.cshtml" />
-    <Content Include="Views\Nominas\Delete.cshtml" />
-    <Content Include="Views\Nominas\Details.cshtml" />
-    <Content Include="Views\Nominas\Edit.cshtml" />
     <Content Include="Views\Nominas\Index.cshtml" />
     <Content Include="Views\Permisoes\Create.cshtml" />
-    <Content Include="Views\Permisoes\Delete.cshtml" />
-    <Content Include="Views\Permisoes\Details.cshtml" />
-    <Content Include="Views\Permisoes\Edit.cshtml" />
     <Content Include="Views\Permisoes\Index.cshtml" />
     <Content Include="Views\SalidaEmpleadoes\Create.cshtml" />
-    <Content Include="Views\SalidaEmpleadoes\Delete.cshtml" />
-    <Content Include="Views\SalidaEmpleadoes\Details.cshtml" />
-    <Content Include="Views\SalidaEmpleadoes\Edit.cshtml" />
     <Content Include="Views\SalidaEmpleadoes\Index.cshtml" />
     <Content Include="Views\Vacaciones\Create.cshtml" />
-    <Content Include="Views\Vacaciones\Delete.cshtml" />
-    <Content Include="Views\Vacaciones\Details.cshtml" />
-    <Content Include="Views\Vacaciones\Edit.cshtml" />
-    <Content Include="Views\Vacaciones\Index.cshtml" />
+    <Content Include="Views\Nominas\VistaNomina.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
