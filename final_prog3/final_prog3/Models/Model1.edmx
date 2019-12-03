@@ -177,7 +177,7 @@
           <Property Name="Motivo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="FechaSalida" Type="DateTime" Nullable="false" Precision="0" />
         </EntityType>
-        <EntityType Name="Vacacione">
+        <EntityType Name="Vacaciones">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -196,7 +196,7 @@
           <EntitySet Name="Nominas" EntityType="Self.Nomina" />
           <EntitySet Name="Permisos" EntityType="Self.Permiso" />
           <EntitySet Name="SalidaEmpleados" EntityType="Self.SalidaEmpleado" />
-          <EntitySet Name="Vacaciones" EntityType="Self.Vacacione" />
+          <EntitySet Name="Vacaciones1" EntityType="final_prog3Model.Vacaciones" />
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
@@ -284,8 +284,8 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Vacaciones">
-            <EntityTypeMapping TypeName="final_prog3Model.Vacacione">
+          <EntitySetMapping Name="Vacaciones1">
+            <EntityTypeMapping TypeName="final_prog3Model.Vacaciones">
               <MappingFragment StoreEntitySet="Vacaciones">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />

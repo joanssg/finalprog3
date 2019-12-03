@@ -12,7 +12,7 @@
         <EntityTypeShape EntityType="final_prog3Model.Nomina" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="final_prog3Model.Permiso" Width="1.5" PointX="4.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="final_prog3Model.SalidaEmpleado" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="final_prog3Model.Vacacione" Width="1.5" PointX="2.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="final_prog3Model.Vacaciones" Width="1.5" PointX="2.75" PointY="6.75" IsExpanded="true" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
