@@ -10,14 +10,14 @@ using final_prog3.Models;
 
 namespace final_prog3.Controllers
 {
-    public class EmpleadosController : Controller
+    public class EmpleadoesController : Controller
     {
         private final_prog3Entities db = new final_prog3Entities();
 
         // GET: Empleados
         public ActionResult Index()
         {
-            var empleados = db.Empleados.Include(e => e.Cargo1);
+            var empleados = db.Empleados;
             return View(empleados.ToList());
         }
 

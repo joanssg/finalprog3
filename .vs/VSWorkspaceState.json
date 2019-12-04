@@ -3,9 +3,8 @@
     "",
     "\\final_prog3",
     "\\final_prog3\\final_prog3",
-    "\\final_prog3\\final_prog3\\Views",
-    "\\final_prog3\\final_prog3\\Views\\Home"
+    "\\final_prog3\\final_prog3\\Controllers"
   ],
-  "SelectedNode": "\\final_prog3\\final_prog3\\Views\\Home\\Index.cshtml",
+  "SelectedNode": "\\final_prog3\\final_prog3.sln",
   "PreviewInSolutionExplorer": false
 }
