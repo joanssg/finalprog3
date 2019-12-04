@@ -4,12 +4,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title -J/K's App</title>
+    <title>@ViewBag.Title - J/K's App</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-inverse ">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -17,13 +17,61 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Recursos Humanos", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                <span class="glyphicon glyphicon-home"></span>
+                @Html.ActionLink("Recursos Humanos", "Index", "Home", new { area = "" }, new { @class = "navbar-brand"  })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Mantenimiento", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Procesos", "About", "Home")</li>
-                    <li>@Html.ActionLink("Informes", "Contact", "Home")</li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="">
+                            Mantenimiento
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/Empleadoes/Index">Empleados</a></li>
+                            <li><a href="/Departamentoes/Index">Departamentos</a></li>
+                            <li><a href="/Cargoes/Index">Cargos</a></li>
+                        </ul>
+                        </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="">
+                            Procesos
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/Nominas/Index">Cálculo de nómina</a></li>
+                            <li><a href="/SalidaEmpleadoes/Index">Salida de empleados</a></li>
+                            <li><a href="/Vacaciones/Index">Vacaciones</a></li>
+                            <li><a href="/Permisoses/Index">Permisos</a></li>
+                            <li><a href="/Licencias/Index">Licencias</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="">
+                            Informes
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <ul class="dropdown-menu">
+                                <li><a href="/Nominas/Index">Nómina</a></li>
+                                <li><a href="/Empleadoes/Index">Empleados Activos</a></li>
+                                <li><a href="/Empleadoes/Index">"Empleados Inactivos"</a></li>
+                                <li><a href="/Departamentoes/Index">Departamentos</a></li>
+                                <li><a href="/Cargies/Index">Cargos</a></li>
+                                <li><a href="/Vacaciones/Index">"Entradas"</a></li>
+                                <li><a href="/SalidaEmpleadoes/Index">Salida de empleados por mes</a></li>
+                                <li><a href="/Licencias/Index">Permisos</a></li>
+                            </ul>
+                            <li>@Html.ActionLink("Nómina", "Index", "Nominas")</li>
+                            <li>@Html.ActionLink("Empleados Activos", "Index", "Empleadoes")</li>
+                            <li>@Html.ActionLink("Empleados Inactivos", "Index", "Empleadoes")</li>
+                            <li>@Html.ActionLink("Departamentos", "Index", "Departamentoes")</li>
+                            <li>@Html.ActionLink("Cargoes", "Index", "Cargoes")</li>
+                            <li>@Html.ActionLink("Entradas de empleados por mes", "Index", "Empleadoes")</li>
+                            <li>@Html.ActionLink("Salida de empleados por mes", "Index", "SalidaEmpleadoes")</li>
+                            <li>@Html.ActionLink("Permisos", "Index", "Permisoses")</li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </div>
