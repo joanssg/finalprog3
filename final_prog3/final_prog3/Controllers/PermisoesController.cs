@@ -11,11 +11,11 @@ using final_prog3.Models;
 
 namespace final_prog3.Controllers
 {
-    public class NominaController : Controller
+    public class PermisoesController : Controller
     {
-
         private final_prog3Entities db = new final_prog3Entities();
 
+        // GET: Permisos
         public ActionResult Index(string Busqueda, string valor)
         {
 
@@ -75,4 +75,3 @@ namespace final_prog3.Controllers
         }
     }
 }
-
