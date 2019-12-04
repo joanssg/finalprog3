@@ -12,8 +12,7 @@ namespace final_prog3.Controllers
 {
     public class CargoesController : Controller
     {
-        public class CargosController : Controller
-        {
+        
             private final_prog3Entities db = new final_prog3Entities();
 
             // GET: Cargos
@@ -126,5 +125,5 @@ namespace final_prog3.Controllers
                 base.Dispose(disposing);
             }
         }
-    }
+   
 }

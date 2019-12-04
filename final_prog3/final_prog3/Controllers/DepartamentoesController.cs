@@ -10,14 +10,14 @@ using final_prog3.Models;
 
 namespace final_prog3.Controllers
 { 
-    public class DepartamentosController : Controller
+    public class DepartamentoesController : Controller
         {
         private final_prog3Entities db = new final_prog3Entities();
 
         // GET: Departamentos
         public ActionResult Index()
         {
-            var departamentos = db.Departamentos.Include(d => d.Empleado);
+            var departamentos = db.Departamentos;
             return View(departamentos.ToList());
         }
 
